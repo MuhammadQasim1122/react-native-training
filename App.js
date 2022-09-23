@@ -2,7 +2,6 @@ import React from 'react';
 import type {Node} from 'react';
 import Form from './components/pages-form/form';
 import {
-  Text,
   View
 } from 'react-native';
 
