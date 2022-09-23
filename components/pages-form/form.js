@@ -6,7 +6,8 @@ import {
   Text,
   View,
   TextInput,
-  Button
+  Button,
+  Alert
 } from 'react-native';
 
 const Form: () => Node = () => {
@@ -16,21 +17,40 @@ const Form: () => Node = () => {
         lastName: null,
         email: null
     });
+    const alertPopUp = () =>
+    Alert.alert(
+      "Error",
+      "It's look like some of the fields are empty, try to fill values",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => console.log("OK Pressed") }
+      ]
+    );
     const submitForm = () => {
         console.log(formData);
-        Axios.post(url,
-            formData, {
-              headers: {
-                'Access-Control-Allow-Origin' : '*'
-              }
-             })
-          .then(res =>{
-            if(res.status === 200 ){
-              alert("Submitted Succesfully");
-            }
-          })
-          changeFormData({firstName : "", lastName: "", email: ""});
-    }
+        if(formData.firstName == "" || formData.lastName == "" || formData.email == ""){
+            console.log("its empty")
+            alertPopUp();
+        }
+        else{
+            Axios.post(url,
+                formData, {
+                  headers: {
+                    'Access-Control-Allow-Origin' : '*'
+                  }
+                 })
+              .then(res =>{
+                if(res.status === 200 ){
+                  alert("Submitted Succesfully");
+                }
+              })
+              changeFormData({firstName : "", lastName: "", email: ""})
+        }
+        }
   return (
       <View>
        <Text>Enter Your First Name</Text>
