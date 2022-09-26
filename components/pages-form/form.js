@@ -1,7 +1,10 @@
 import React, {useState} from 'react';
 import type {Node} from 'react';
 import styles from './formStyles';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Axios from 'axios';
+import TestApp from '../pages-test/test';
 import {
   Text,
   View,
@@ -10,7 +13,7 @@ import {
   Alert
 } from 'react-native';
 
-const Form: () => Node = () => {
+const Form: () => Node = ({ navigation }) => {
     const url = "https://webhook.site/a6c8c95f-5d4b-4067-8451-ecd4af4a9da5";
     const [formData, changeFormData] = useState({
         firstName: null,
@@ -31,9 +34,7 @@ const Form: () => Node = () => {
       ]
     );
     const submitForm = () => {
-        console.log(formData);
         if(formData.firstName == "" || formData.lastName == "" || formData.email == ""){
-            console.log("its empty")
             alertPopUp();
         }
         else{
@@ -51,7 +52,8 @@ const Form: () => Node = () => {
               changeFormData({firstName : "", lastName: "", email: ""})
         }
         }
-  return (
+
+  return [
       <View>
        <Text>Enter Your First Name</Text>
        <TextInput
@@ -78,7 +80,7 @@ const Form: () => Node = () => {
         title="Submit"
       />
       </View>
-  );
+    ];
 };
 
 export default Form;
